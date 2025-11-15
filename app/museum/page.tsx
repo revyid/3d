@@ -130,12 +130,12 @@ const generateArtworkPositions = (artworks: typeof artworkData) => {
 
 const positionedArtworks = generateArtworkPositions(artworkData);
 
-const AUTOPLAY_DELAY = 2.0; // seconds to pause after each waypoint animation
+const AUTOPLAY_DELAY = 2.0;
 
 const generateCameraWaypoints = (artworks: ReturnType<typeof generateArtworkPositions>) => {
   return artworks.map((artwork) => {
-    const zOffset = 6; // kamera lebih dekat ke artwork
-    const camX = artwork.position.x < 0 ? -WALL_OFFSET + 4 : WALL_OFFSET - 4; // kamera lebih ke tengah
+    const zOffset = 2;
+    const camX = artwork.position.x < 0 ? -WALL_OFFSET + 6 : WALL_OFFSET - 6;
 
     return {
       pos: [camX, 3.2, artwork.position.z + zOffset] as [number, number, number],
