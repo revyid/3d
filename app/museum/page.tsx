@@ -821,7 +821,7 @@ export default function MuseumPage() {
 
       <LoadingBar />
 
-      <AnimatePresence>
+<AnimatePresence>
         {!hasEntered && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -830,7 +830,8 @@ export default function MuseumPage() {
             transition={{ duration: 0.8 }}
             className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black"
             style={{
-              backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(217, 119, 6, 0.12) 0%, transparent 50%)',
+              backgroundImage:
+                'radial-gradient(circle at 50% 50%, rgba(217, 119, 6, 0.12) 0%, transparent 50%)',
             }}
           >
             <motion.div
@@ -915,6 +916,7 @@ export default function MuseumPage() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
             className="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-50"
+            onClick={() => setShowWelcome(false)}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
@@ -957,14 +959,13 @@ export default function MuseumPage() {
               >
                 <div className="flex items-center gap-3 text-sm text-amber-400">
                   <kbd className="px-4 py-2 bg-white/10 rounded-lg border border-amber-500/30 font-mono">
-                    Tekan tombol apa saja
+                    Tekan tombol apa saja atau tap di mana saja
                   </kbd>
-                  <span>untuk memulai</span>
                 </div>
                 
                 <motion.div
                   animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                   className="mt-4"
                 >
                   <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
