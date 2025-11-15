@@ -134,7 +134,7 @@ const AUTOPLAY_DELAY = 2.0; // seconds to pause after each waypoint animation
 
 const generateCameraWaypoints = (artworks: ReturnType<typeof generateArtworkPositions>) => {
   return artworks.map((artwork) => {
-    const zOffset = 2.5; // kamera lebih dekat ke artwork
+    const zOffset = 6; // kamera lebih dekat ke artwork
     const camX = artwork.position.x < 0 ? -WALL_OFFSET + 4 : WALL_OFFSET - 4; // kamera lebih ke tengah
 
     return {
