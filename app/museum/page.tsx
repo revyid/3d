@@ -130,12 +130,19 @@ const generateArtworkPositions = (artworks: typeof artworkData) => {
 
 const positionedArtworks = generateArtworkPositions(artworkData);
 
+const AUTOPLAY_DELAY = 2.0; // seconds to pause after each waypoint animation
+
 const generateCameraWaypoints = (artworks: ReturnType<typeof generateArtworkPositions>) => {
-  return artworks.map((artwork) => ({
-    pos: [0, 2.8, artwork.position.z + 7] as [number, number, number],
-    look: [artwork.position.x, artwork.position.y, artwork.position.z] as [number, number, number],
-    duration: 4,
-  }));
+  return artworks.map((artwork) => {
+    const zOffset = 3; // put camera closer to the artwork along Z
+    const camX = artwork.position.x < 0 ? -WALL_OFFSET + 3 : WALL_OFFSET - 3; // move camera closer to the wall
+
+    return {
+      pos: [camX, 2.6, artwork.position.z + zOffset] as [number, number, number],
+      look: [artwork.position.x, artwork.position.y, artwork.position.z] as [number, number, number],
+      duration: 4,
+    };
+  });
 };
 
 const cameraWaypoints = generateCameraWaypoints(positionedArtworks);
@@ -743,13 +750,9 @@ export default function MuseumPage() {
       return;
     }
 
-    timerRef.current = setTimeout(() => {
-      if (currentIndex < cameraWaypoints.length - 1) {
-        setCurrentIndex((p) => p + 1);
-      } else {
-        setIsPlaying(false);
-      }
-    }, cameraWaypoints[currentIndex].duration * 1000);
+    // Autoplay advancement is handled when the camera animation completes
+    // (handled by `onAnimComplete`). This effect only keeps timers cleared
+    // when the user stops autoplay.
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
@@ -770,18 +773,32 @@ export default function MuseumPage() {
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') setCurrentIndex((p) => Math.max(0, p - 1));
       if (e.key === 'ArrowRight') setCurrentIndex((p) => Math.min(cameraWaypoints.length - 1, p + 1));
-      if (e.key === ' ') {
-        e.preventDefault();
-        setIsPlaying((p) => !p);
-      }
+      // Spacebar no longer toggles autoplay to keep tour manual by default
+      // clear any pending autoplay advances when user manually navigates
+      if (timerRef.current) clearTimeout(timerRef.current);
     };
     window.addEventListener('keydown', handleKeydown);
     return () => window.removeEventListener('keydown', handleKeydown);
   }, []);
 
   const handleAnimComplete = () => {
-    if (isPlaying && currentIndex < cameraWaypoints.length - 1) {
-      setCurrentIndex((p) => p + 1);
+    if (timerRef.current) clearTimeout(timerRef.current);
+
+    if (isPlaying) {
+      // schedule the next waypoint after a short pause so user can view the artwork
+      if (currentIndex < cameraWaypoints.length - 1) {
+        timerRef.current = setTimeout(() => {
+          setCurrentIndex((p) => {
+            if (!isPlaying || p >= cameraWaypoints.length - 1) {
+              setIsPlaying(false);
+              return p;
+            }
+            return p + 1;
+          });
+        }, AUTOPLAY_DELAY * 1000);
+      } else {
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -883,8 +900,8 @@ export default function MuseumPage() {
                   <span>Navigasi</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <kbd className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs">Space</kbd>
-                  <span>Putar Otomatis</span>
+                  <kbd className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs">Play</kbd>
+                  <span>Mulai lewat tombol</span>
                 </div>
               </motion.div>
             </motion.div>
