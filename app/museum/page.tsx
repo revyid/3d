@@ -132,21 +132,20 @@ const positionedArtworks = generateArtworkPositions(artworkData);
 
 const AUTOPLAY_DELAY = 2.0; // seconds to pause after each waypoint animation
 
-const generateCameraWaypoints = (
-  artworks: ReturnType<typeof generateArtworkPositions>,
-  zOffset = 3,
-  xFactor = 0.6
-) => {
+const generateCameraWaypoints = (artworks: ReturnType<typeof generateArtworkPositions>) => {
   return artworks.map((artwork) => {
-    const camX = artwork.position.x * xFactor;
+    const zOffset = 2.5; // kamera lebih dekat ke artwork
+    const camX = artwork.position.x < 0 ? -WALL_OFFSET + 4 : WALL_OFFSET - 4; // kamera lebih ke tengah
 
     return {
-      pos: [camX, 2.6, artwork.position.z + zOffset] as [number, number, number],
+      pos: [camX, 3.2, artwork.position.z + zOffset] as [number, number, number],
       look: [artwork.position.x, artwork.position.y, artwork.position.z] as [number, number, number],
       duration: 4,
     };
   });
 };
+
+const cameraWaypoints = generateCameraWaypoints(positionedArtworks);
 
 const galleryLength = Math.abs(positionedArtworks[positionedArtworks.length - 1].position.z) + 35;
 
@@ -657,12 +656,10 @@ function GalleryScene({
   currentIndex,
   isPlaying,
   onAnimComplete,
-  cameraWaypoints,
 }: {
   currentIndex: number;
   isPlaying: boolean;
   onAnimComplete: () => void;
-  cameraWaypoints: Array<{ pos: [number, number, number]; look: [number, number, number]; duration: number }>;
 }) {
   const { camera } = useThree();
   const animState = useRef({ progress: 0, startPos: new Vector3(), startQuat: new Quaternion() });
@@ -745,10 +742,7 @@ export default function MuseumPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [cameraZOffset, setCameraZOffset] = useState(3); // default offset used by waypoints
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const cameraWaypoints = useMemo(() => generateCameraWaypoints(positionedArtworks, cameraZOffset, 0.6), [positionedArtworks, cameraZOffset]);
 
   useEffect(() => {
     if (!isPlaying) {
@@ -780,11 +774,6 @@ export default function MuseumPage() {
       if (e.key === 'ArrowLeft') setCurrentIndex((p) => Math.max(0, p - 1));
       if (e.key === 'ArrowRight') setCurrentIndex((p) => Math.min(cameraWaypoints.length - 1, p + 1));
       // Spacebar no longer toggles autoplay to keep tour manual by default
-      if (e.key.toLowerCase() === 't') {
-        // press T to move camera a bit farther from artwork
-        setCameraZOffset((p) => Math.min(p + 2, 12));
-        if (timerRef.current) clearTimeout(timerRef.current);
-      }
       // clear any pending autoplay advances when user manually navigates
       if (timerRef.current) clearTimeout(timerRef.current);
     };
@@ -825,7 +814,6 @@ export default function MuseumPage() {
             currentIndex={currentIndex}
             isPlaying={isPlaying}
             onAnimComplete={handleAnimComplete}
-            cameraWaypoints={cameraWaypoints}
           />
         )}
         <fog attach="fog" args={['#0f0f0f', 40, 100]} />
