@@ -1163,29 +1163,20 @@ export default function MuseumPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <p className="text-xs sm:text-sm md:text-sm text-amber-400 font-medium mb-1 md:mb-2 tracking-wider uppercase">
-                {positionedArtworks[currentIndex].artist}
+              <p className="text-xs sm:text-xs md:text-xs text-gray-400 mb-3 md:mb-5 tracking-wide">
+                {positionedArtworks[currentIndex].year}
               </p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-            >
-              <p className="text-xs sm:text-xs md:text-xs text-gray-400 mb-3 md:mb-5 tracking-wide">
-                {positionedArtworks[currentIndex].year}
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
               className="h-px bg-gradient-to-r from-amber-400 via-amber-500 to-transparent mb-4 md:mb-6"
             />
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.5 }}
             >
               <p className="text-xs sm:text-sm md:text-sm text-gray-300 leading-relaxed mb-6 md:mb-8 font-light line-clamp-3 md:line-clamp-none">
                 {positionedArtworks[currentIndex].description}
@@ -1194,7 +1185,7 @@ export default function MuseumPage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.6 }}
               className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs sm:text-xs md:text-xs text-gray-500 pt-4 md:pt-6 border-t border-white/10"
             >
               <span className="font-medium">Karya {currentIndex + 1} dari {positionedArtworks.length}</span>
