@@ -9,102 +9,102 @@ import * as THREE from 'three';
 
 const artworkData = [
   {
-    id: 'artwork-1',
-    title: 'Abstract Harmony',
-    artist: 'Contemporary Collection',
-    year: '2024',
-    src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&h=1200',
-    description: 'Eksplorasi warna dan bentuk geometris dalam komposisi abstrak yang dinamis.',
+    "id": "islamisasi-1",
+    "title": "Masuknya Islam ke Nusantara",
+    "year": "Abad ke-13 hingga ke-16 M",
+    "src": "/ms/1.jpg",
+    "description": "Islamisasi di Nusantara berlangsung secara damai melalui berbagai jalur, antara lain: Perkawinan, Perdagangan, Dakwah, Seni Budaya, dan Tasawuf. Terdapat juga beberapa teori mengenai asal dan waktu kedatangan Islam ke wilayah ini.",
+    "theme": "Jalur-Jalur Utama"
   },
   {
-    id: 'artwork-2',
-    title: 'Ocean Serenity',
-    artist: 'Nature Portfolio',
-    year: '2023',
-    src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1200&h=1200',
-    description: 'Keindahan alam laut yang menawan pada saat golden hour.',
+    "id": "islamisasi-2",
+    "title": "Jalur Perkawinan",
+    "year": "Abad ke-15 M",
+    "src": "/ms/2.jpg",
+    "description": "Perkawinan adalah jalur yang efektif, di mana pedagang Muslim menikahi wanita pribumi (seringkali putri bangsawan) yang terlebih dahulu memeluk Islam, menghasilkan keturunan Muslim dan memperluas pengaruh agama hingga ke lingkungan istana.",
+    "theme": "Jalur Perkawinan"
   },
   {
-    id: 'artwork-3',
-    title: 'Mountain Majesty',
-    artist: 'Landscape Series',
-    year: '2023',
-    src: 'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=1200&h=1200',
-    description: 'Panorama pegunungan yang megah dengan puncak dramatis.',
+    "id": "islamisasi-3",
+    "title": "Jalur Dakwah dan Pendidikan",
+    "year": "Abad ke-15 M",
+    "src": "/ms/3.jpg",
+    "description": "Para ulama dan mubaligh (seperti Wali Songo di Jawa) menyebarkan Islam secara langsung melalui pengajaran di surau dan pesantren. Pesantren menjadi pusat pendidikan yang melahirkan generasi baru ulama dan pemimpin Muslim.",
+    "theme": "Jalur Dakwah"
   },
   {
-    id: 'artwork-4',
-    title: 'Forest Whispers',
-    artist: 'Natural Light',
-    year: '2022',
-    src: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=1200&h=1200',
-    description: 'Jalur hutan yang mempesona dengan cahaya menyaring melalui kanopi.',
+    "id": "islamisasi-4",
+    "title": "Jalur Perdagangan",
+    "year": "Abad ke-7 hingga ke-16 M",
+    "src": "/ms/4.jpg",
+    "description": "Para pedagang Muslim dari Arab, Persia, dan Gujarat singgah di pelabuhan Nusantara. Interaksi ekonomi yang intensif menumbuhkan komunitas Muslim di pesisir, yang menjadi cikal bakal permukiman dan pusat dakwah.",
+    "theme": "Jalur Perdagangan"
   },
   {
-    id: 'artwork-5',
-    title: 'Urban Patterns',
-    artist: 'Modern Vision',
-    year: '2024',
-    src: 'https://images.unsplash.com/photo-1578321272176-4e4e0dc97f1a?w=1200&h=1200',
-    description: 'Geometri urban yang ekspresif mengeksplorasi bentuk dan ruang.',
+    "id": "islamisasi-5",
+    "title": "Jalur Seni dan Budaya",
+    "year": "Abad ke-15 M",
+    "src": "/ms/5.jpg",
+    "description": "Penyebaran Islam dilakukan melalui adaptasi dan akulturasi budaya lokal. Contoh paling terkenal adalah Sunan Kalijaga yang menggunakan media seni wayang, ukiran, dan gending (lagu) untuk menyampaikan ajaran Islam secara halus dan mudah diterima.",
+    "theme": "Jalur Seni & Budaya"
   },
   {
-    id: 'artwork-6',
-    title: 'Desert Solitude',
-    artist: 'Minimal Landscape',
-    year: '2023',
-    src: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1200&h=1200',
-    description: 'Gurun pasir yang luas dengan bukit pasir yang bergelombang.',
+    "id": "islamisasi-6",
+    "title": "Teori Gujarat (India)",
+    "year": "Abad ke-13 M",
+    "src": "/ms/6.jpg",
+    "description": "Teori ini menyatakan bahwa Islam masuk ke Nusantara dari pedagang Gujarat (India) pada sekitar abad ke-13 M. Bukti pendukung utama adalah penemuan batu nisan Sultan Malik As-Saleh di Pasai yang mirip dengan corak nisan di Gujarat.",
+    "theme": "Teori Islamisasi"
   },
   {
-    id: 'artwork-7',
-    title: 'Neon Nights',
-    artist: 'Urban Chronicles',
-    year: '2024',
-    src: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1200&h=1200',
-    description: 'Kehidupan kota malam yang vibrant dengan energi metropolis.',
+    "id": "islamisasi-7",
+    "title": "Teori Arab/Mekkah",
+    "year": "Abad ke-7 M",
+    "src": "/ms/7.jpg",
+    "description": "Teori ini berpendapat bahwa Islam datang langsung dari Arab (Timur Tengah) sejak abad ke-7 Masehi. Bukti pendukungnya adalah jalur perdagangan Arab yang sudah ramai sejak masa awal, serta kesamaan mazhab Syafi'i yang dianut di Nusantara dan Arab.",
+    "theme": "Teori Islamisasi"
   },
   {
-    id: 'artwork-8',
-    title: 'Botanical Grace',
-    artist: 'Flora Collection',
-    year: '2023',
-    src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&h=1200',
-    description: 'Komposisi bunga yang elegan merayakan keindahan alam.',
+    "id": "islamisasi-8",
+    "title": "Teori Persia",
+    "year": "Abad ke-13 M",
+    "src": "/ms/8.jpg",
+    "description": "Teori ini menyebutkan bahwa Islam datang dari Persia (Iran). Bukti yang sering digunakan adalah kesamaan tradisi budaya Islam di Nusantara dengan Persia, seperti perayaan 10 Muharram (Asyura) di beberapa daerah yang mirip dengan budaya Syiah Persia.",
+    "theme": "Teori Islamisasi"
+  },
+{
+    "id": "islamisasi-9",
+    "title": "Islamisasi di Muara Bungo (Jambi)",
+    "year": "Abad ke-19 M",
+    "src": "/ms/9.jpg",
+    "description": "Proses Islamisasi di Muara Bungo merupakan bagian dari penyebaran Islam di hulu Sungai Batanghari, Kesultanan Jambi. Tokoh dakwah awal diyakini berasal dari jalur Jawa dan Minangkabau. Bukti penguatan Islam ditunjukkan dengan pembangunan masjid-masjid tua, seperti Masjid Al-Falah di Empelu (dibangun ulang 1827) dan Masjid Al-Munawwaroh (cikal bakal surau 1900) yang menjadi pusat pendidikan dan dakwah.",
+    "theme": "Islamisasi Regional"
   },
   {
-    id: 'artwork-9',
-    title: 'Cosmic Wonder',
-    artist: 'Space Series',
-    year: '2024',
-    src: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200&h=1200',
-    description: 'Eksplorasi visual keajaiban alam semesta yang tak terbatas.',
+    "id": "islamisasi-10",
+    "title": "Seni dan Budaya Islam Muara Bungo",
+    "year": "Abad ke-19 M - Sekarang",
+    "src": "/ms/10.jpg",
+    "description": "Seni dan budaya Islam di Muara Bungo (Jambi) sangat kental dengan tradisi Melayu dan lokalitas. Ini terlihat pada arsitektur masjid tradisional yang menyerupai rumah panggung Melayu, serta seni ukir (kaligrafi) pada mimbar dan dinding. Tradisi lisan dan kesenian yang bernuansa Islami, seperti zikir maulid dan seni hadrah/rebana, digunakan untuk menyebarkan ajaran agama dalam acara adat dan keagamaan.",
+    "theme": "Seni & Budaya Regional"
   },
   {
-    id: 'artwork-10',
-    title: 'Autumn Reflections',
-    artist: 'Seasonal Collection',
-    year: '2023',
-    src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=1200',
-    description: 'Keindahan musim gugur yang terpancar dalam warna hangat.',
+    "id": "islamisasi-11",
+    "title": "Pawai Obor 10 Muharram (Asyura)",
+    "year": "Masa Kini (Tradisi Tahunan)",
+    "src": "/ms/11.jpg",
+    "description": "Pawai Obor yang dilaksanakan di Muara Bungo sering terkait dengan peringatan 10 Muharram (Hari Asyura), di mana kegiatan ini menjadi simbol penyambutan dan penghormatan terhadap hari penting dalam kalender Hijriah. Pawai ini bertujuan mempererat kebersamaan dan memeriahkan hari raya Islam, yang sering diiringi dengan kegiatan amal atau pembacaan sholawat.",
+    "theme": "Tradisi Keagamaan"
   },
   {
-    id: 'artwork-11',
-    title: 'Minimalist Dawn',
-    artist: 'Contemporary Minimal',
-    year: '2024',
-    src: 'https://images.unsplash.com/photo-1518098268026-4e89f1a2cd8e?w=1200&h=1200',
-    description: 'Kesederhanaan yang powerful dalam cahaya fajar.',
-  },
-  {
-    id: 'artwork-12',
-    title: 'Urban Pulse',
-    artist: 'City Life',
-    year: '2023',
-    src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=1200',
-    description: 'Dinamika kehidupan metropolitan yang tidak pernah tidur.',
-  },
-];
+    "id": "islamisasi-12",
+    "title": "Tradisi Betimbang/Mengembang Tando",
+    "year": "Tradisi Lokal Melayu",
+    "src": "/ms/12.jpg",
+    "description": "Tradisi 'Betimbang' (atau 'Mengembang Tando' di beberapa dusun) terkait dengan ritual siklus hidup masyarakat, khususnya dalam adat pernikahan (Tando) atau penimbangan bayi (Betimbang). Meskipun memiliki akar adat pra-Islam, ritual ini telah diakulturasi dengan pembacaan doa-doa dan ayat suci Al-Qur'an, menjadikannya bagian dari budaya Islam Melayu setempat.",
+    "theme": "Akulturasi Budaya"
+  }
+]
 
 const SPACING = 8;
 const WALL_OFFSET = 11;
@@ -229,11 +229,11 @@ function Chandelier({ position }: { position: [number, number, number] }) {
 function WallLantern({ position, rotation }: { position: [number, number, number]; rotation: [number, number, number] }) {
   return (
     <group position={position} rotation={rotation}>
-      <mesh position={[0, 0, 0.1]}>
+      <mesh position={[0, 0, -0.18]}>
         <boxGeometry args={[0.15, 0.3, 0.08]} />
         <meshStandardMaterial color="#4a3926" roughness={0.5} metalness={0.3} />
       </mesh>
-      <mesh position={[0, -0.25, 0.25]} castShadow>
+      <mesh position={[0, -0.25, -0.05]} castShadow>
         <boxGeometry args={[0.2, 0.35, 0.2]} />
         <meshStandardMaterial 
           color="#2a2a2a" 
@@ -243,7 +243,7 @@ function WallLantern({ position, rotation }: { position: [number, number, number
           opacity={0.7}
         />
       </mesh>
-      <mesh position={[0, -0.25, 0.36]}>
+      <mesh position={[0, -0.25, 0.06]}>
         <planeGeometry args={[0.18, 0.32]} />
         <meshStandardMaterial 
           color="#ffe5b3" 
@@ -253,12 +253,12 @@ function WallLantern({ position, rotation }: { position: [number, number, number
           opacity={0.6}
         />
       </mesh>
-      <mesh position={[0, -0.05, 0.25]}>
+      <mesh position={[0, -0.05, -0.05]}>
         <coneGeometry args={[0.14, 0.12, 4]} />
         <meshStandardMaterial color="#3a3a3a" roughness={0.4} metalness={0.5} />
       </mesh>
       <pointLight
-        position={[0, -0.25, 0.25]}
+        position={[0, -0.25, -0.05]}
         intensity={0.8}
         distance={6}
         color="#ffe5b3"
@@ -597,11 +597,11 @@ function GalleryEnvironment() {
         <React.Fragment key={`lantern-${i}`}>
           <WallLantern 
             position={[
-              artwork.position.x > 0 ? artwork.position.x - 1.5 : artwork.position.x + 1.5,
-              artwork.position.y + 2,
+              artwork.position.x,
+              artwork.position.y + 3.0,
               artwork.position.z
             ]}
-            rotation={[0, artwork.wall === 'left' ? Math.PI / 2 : -Math.PI / 2, 0]}
+            rotation={[0, artwork.wall === 'left' ? 0 : Math.PI, 0]}
           />
         </React.Fragment>
       ))}
@@ -1205,7 +1205,7 @@ export default function MuseumPage() {
                 Navigasi dengan panah
               </span>
             </motion.div>
-          </div>
+          </div>cl
         </motion.div>
       )}
 
