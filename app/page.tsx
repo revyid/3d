@@ -151,6 +151,65 @@ const galleryLength = Math.abs(positionedArtworks[positionedArtworks.length - 1]
 
 const easeInOutQuart = (t: number) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
 
+function createTextureFromCanvas(width: number, height: number, generator: (ctx: CanvasRenderingContext2D) => void) {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+  
+  generator(ctx);
+  
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearMipMapLinearFilter;
+  return texture;
+}
+
+function generateWallTexture() {
+  return createTextureFromCanvas(512, 512, (ctx) => {
+    ctx.fillStyle = '#f8f6f4';
+    ctx.fillRect(0, 0, 512, 512);
+    
+    for (let x = 0; x < 512; x += 32) {
+      for (let y = 0; y < 512; y += 32) {
+        ctx.strokeStyle = `rgba(220, 215, 210, ${0.4 + Math.random() * 0.2})`;
+        ctx.lineWidth = 0.5;
+        ctx.strokeRect(x, y, 32, 32);
+      }
+    }
+    
+    for (let i = 0; i < 100; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      ctx.fillStyle = `rgba(200, 195, 190, ${Math.random() * 0.08})`;
+      ctx.fillRect(x, y, Math.random() * 1.5 + 0.5, Math.random() * 1.5 + 0.5);
+    }
+  });
+}
+
+function generateFloorTexture() {
+  return createTextureFromCanvas(512, 512, (ctx) => {
+    ctx.fillStyle = '#ebe7e1';
+    ctx.fillRect(0, 0, 512, 512);
+    
+    for (let x = 0; x < 512; x += 64) {
+      for (let y = 0; y < 512; y += 64) {
+        ctx.strokeStyle = `rgba(150, 140, 130, ${Math.random() * 0.2})`;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x, y, 64, 64);
+      }
+    }
+    
+    for (let i = 0; i < 300; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      ctx.fillStyle = `rgba(80, 70, 60, ${Math.random() * 0.15})`;
+      ctx.fillRect(x, y, Math.random() * 2 + 1, Math.random() * 2 + 1);
+    }
+  });
+}
+
 function Easel({ position, rotation }: { position: [number, number, number]; rotation: [number, number, number] }) {
   return (
     <group position={position} rotation={rotation}>
@@ -215,53 +274,82 @@ function Chandelier({ position }: { position: [number, number, number] }) {
             </mesh>
             <pointLight
               position={[x, -0.15, z]}
-              intensity={1.5}
-              distance={12}
-              color="#ffe5b3"
+              intensity={2.2}
+              distance={15}
+              color="#ffe8b8"
+              decay={1.8}
             />
           </group>
         );
       })}
+      {/* Ambient light from chandelier */}
+      <pointLight
+        position={[0, 0, 0]}
+        intensity={1.5}
+        distance={18}
+        color="#fff5e0"
+        decay={1.9}
+      />
     </group>
   );
 }
 
-function WallLantern({ position, rotation }: { position: [number, number, number]; rotation: [number, number, number] }) {
+function SpotlightFrame({ position, direction }: { position: [number, number, number]; direction: 'left' | 'right' }) {
+  const angle = direction === 'left' ? 0.45 : -0.45;
+  
   return (
-    <group position={position} rotation={rotation}>
-      <mesh position={[0, 0, -0.18]}>
-        <boxGeometry args={[0.15, 0.3, 0.08]} />
-        <meshStandardMaterial color="#4a3926" roughness={0.5} metalness={0.3} />
+    <group position={position}>
+      {/* Track rail mounting */}
+      <mesh position={[0, 0.1, 0]} castShadow>
+        <boxGeometry args={[0.25, 0.06, 0.25]} />
+        <meshStandardMaterial color="#2a2a2a" roughness={0.25} metalness={0.85} />
       </mesh>
-      <mesh position={[0, -0.25, -0.05]} castShadow>
-        <boxGeometry args={[0.2, 0.35, 0.2]} />
+      
+      {/* Adjustable arm */}
+      <mesh position={[0, -0.05, 0]} rotation={[angle, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.04, 0.04, 0.2, 12]} />
+        <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.8} />
+      </mesh>
+      
+      {/* Spotlight head - larger and more detailed */}
+      <mesh position={[0, -0.2, 0.12]} rotation={[angle + 0.3, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.12, 0.08, 0.22, 16]} />
+        <meshStandardMaterial color="#2a2a2a" roughness={0.3} metalness={0.75} />
+      </mesh>
+      
+      {/* Spotlight lens */}
+      <mesh position={[0, -0.32, 0.18]} rotation={[angle + 0.3, 0, 0]}>
+        <cylinderGeometry args={[0.09, 0.09, 0.03, 16]} />
         <meshStandardMaterial 
-          color="#2a2a2a" 
-          roughness={0.3} 
-          metalness={0.6}
+          color="#fff9f0" 
+          emissive="#ffe5b3"
+          emissiveIntensity={0.6}
+          roughness={0.1} 
+          metalness={0.9}
           transparent
-          opacity={0.7}
+          opacity={0.9}
         />
       </mesh>
-      <mesh position={[0, -0.25, 0.06]}>
-        <planeGeometry args={[0.18, 0.32]} />
-        <meshStandardMaterial 
-          color="#ffe5b3" 
-          emissive="#ffebb3" 
-          emissiveIntensity={0.4}
-          transparent
-          opacity={0.6}
-        />
-      </mesh>
-      <mesh position={[0, -0.05, -0.05]}>
-        <coneGeometry args={[0.14, 0.12, 4]} />
-        <meshStandardMaterial color="#3a3a3a" roughness={0.4} metalness={0.5} />
-      </mesh>
+      
+      {/* Main spotlight with better coverage */}
+      <spotLight
+        position={[0, -0.35, 0.2]}
+        angle={0.7}
+        penumbra={0.6}
+        intensity={3.5}
+        distance={22}
+        color="#fff8e6"
+        castShadow={false}
+        decay={1.6}
+      />
+      
+      {/* Fill light for softer illumination */}
       <pointLight
-        position={[0, -0.25, -0.05]}
-        intensity={0.8}
-        distance={6}
-        color="#ffe5b3"
+        position={[0, -0.3, 0.15]}
+        intensity={1.2}
+        distance={8}
+        color="#fff9f0"
+        decay={2}
       />
     </group>
   );
@@ -404,32 +492,46 @@ function PictureFrame({
 
       {isActive && (
         <>
+          {/* Main artwork spotlight - lebih kuat dan luas */}
           <spotLight
-            position={[0, 3.2, 2.8]}
-            intensity={8}
-            angle={0.35}
-            penumbra={0.7}
-            distance={16}
-            color="#ffe5b3"
+            position={[0, 3.5, 3.2]}
+            angle={0.45}
+            penumbra={0.65}
+            intensity={10}
+            distance={18}
+            color="#fff5e1"
             castShadow
-            shadow-mapSize-width={2048}
-            shadow-mapSize-height={2048}
-            shadow-bias={-0.00005}
-            decay={2}
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+            shadow-bias={-0.00004}
+            decay={1.7}
           />
+          
+          {/* Ambient fill light untuk mengurangi shadow yang terlalu keras */}
           <pointLight
-            position={[0, 1.5, 2.0]}
-            intensity={3.0}
+            position={[0, 2, 2.5]}
+            intensity={4.0}
+            distance={12}
+            color="#fff9f0"
+            decay={1.8}
+          />
+          
+          {/* Side fill light untuk dimensi */}
+          <pointLight
+            position={[artwork.position.x > 0 ? 4 : -4, 4.5, artwork.position.z]}
+            intensity={3.2}
             distance={10}
-            color="#fff7e6"
+            color="#ffecd9"
             decay={2}
           />
+          
+          {/* Rim light untuk kontur */}
           <pointLight
-            position={[artwork.position.x > 0 ? 3 : -3, 5, artwork.position.z]}
-            intensity={2.5}
+            position={[artwork.position.x > 0 ? -2 : 2, 3, artwork.position.z - 1]}
+            intensity={1.8}
             distance={8}
-            color="#ffd9a6"
-            decay={2}
+            color="#fff4e0"
+            decay={2.2}
           />
         </>
       )}
@@ -444,41 +546,75 @@ function PictureFrame({
 
 function GalleryEnvironment() {
   const floorRef = useRef<THREE.Mesh>(null);
+  const wallTexture = useMemo(() => generateWallTexture(), []);
+  const floorTexture = useMemo(() => generateFloorTexture(), []);
 
   return (
     <group>
       <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -(galleryLength + ENTRANCE_ZONE) / 2 + ENTRANCE_ZONE / 2]} receiveShadow>
         <planeGeometry args={[28, galleryLength + ENTRANCE_ZONE]} />
         <meshStandardMaterial 
+          map={floorTexture}
           color="#ebe7e1" 
-          roughness={0.82} 
-          metalness={0.03}
+          roughness={0.85} 
+          metalness={0.02}
+          toneMapped={false}
         />
       </mesh>
 
       <mesh position={[-14, 6.5, -(galleryLength + ENTRANCE_ZONE) / 2 + ENTRANCE_ZONE / 2]}>
         <boxGeometry args={[0.4, 13, galleryLength + ENTRANCE_ZONE]} />
-        <meshStandardMaterial color="#f5f2ed" roughness={0.68} metalness={0} />
+        <meshStandardMaterial 
+          map={wallTexture}
+          color="#f8f6f4" 
+          roughness={0.6} 
+          metalness={0.01}
+          toneMapped={false}
+        />
       </mesh>
 
       <mesh position={[14, 6.5, -(galleryLength + ENTRANCE_ZONE) / 2 + ENTRANCE_ZONE / 2]}>
         <boxGeometry args={[0.4, 13, galleryLength + ENTRANCE_ZONE]} />
-        <meshStandardMaterial color="#f5f2ed" roughness={0.68} metalness={0} />
+        <meshStandardMaterial 
+          map={wallTexture}
+          color="#f8f6f4" 
+          roughness={0.6} 
+          metalness={0.01}
+          toneMapped={false}
+        />
       </mesh>
 
       <mesh position={[0, 13, -(galleryLength + ENTRANCE_ZONE) / 2 + ENTRANCE_ZONE / 2]} rotation={[Math.PI / 2, 0, 0]}>
         <planeGeometry args={[28, galleryLength + ENTRANCE_ZONE]} />
-        <meshStandardMaterial color="#fcfcfa" roughness={0.42} metalness={0.02} />
+        <meshStandardMaterial 
+          map={wallTexture}
+          color="#fafaf8" 
+          roughness={0.45} 
+          metalness={0.01}
+          toneMapped={false}
+        />
       </mesh>
 
       <mesh position={[0, 6.5, -galleryLength + ENTRANCE_ZONE / 2 - 0.7]}>
         <boxGeometry args={[28, 13, 1.4]} />
-        <meshStandardMaterial color="#f5f2ed" roughness={0.68} metalness={0} />
+        <meshStandardMaterial 
+          map={wallTexture}
+          color="#f8f6f4" 
+          roughness={0.6} 
+          metalness={0.01}
+          toneMapped={false}
+        />
       </mesh>
 
       <mesh position={[0, 6.5, ENTRANCE_ZONE / 2 + 0.7]}>
         <boxGeometry args={[28, 13, 1.4]} />
-        <meshStandardMaterial color="#f5f2ed" roughness={0.68} metalness={0} />
+        <meshStandardMaterial 
+          map={wallTexture}
+          color="#f8f6f4" 
+          roughness={0.6} 
+          metalness={0.01}
+          toneMapped={false}
+        />
       </mesh>
 
       {[...Array(Math.ceil(galleryLength / 12))].map((_, i) => {
@@ -594,14 +730,14 @@ function GalleryEnvironment() {
       ))}
 
       {positionedArtworks.map((artwork, i) => (
-        <React.Fragment key={`lantern-${i}`}>
-          <WallLantern 
+        <React.Fragment key={`spotlight-${i}`}>
+          <SpotlightFrame 
             position={[
               artwork.position.x,
-              artwork.position.y + 3.0,
+              artwork.position.y + 3.5,
               artwork.position.z
             ]}
-            rotation={[0, artwork.wall === 'left' ? 0 : Math.PI, 0]}
+            direction={artwork.wall === 'left' ? 'left' : 'right'}
           />
         </React.Fragment>
       ))}
@@ -612,50 +748,108 @@ function GalleryEnvironment() {
 function LightingSetup() {
   return (
     <>
-      <ambientLight intensity={0.45} color="#fefefe" />
+      {/* Ambient light lebih kuat untuk base illumination */}
+      <ambientLight intensity={0.35} color="#fefdfb" />
+      
+      {/* Main directional light - lebih soft */}
       <directionalLight
-        position={[30, 35, 30]}
-        intensity={1.15}
-        color="#fffaf2"
+        position={[25, 40, 35]}
+        intensity={0.8}
+        color="#fffcf5"
         castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-        shadow-camera-left={-30}
-        shadow-camera-right={30}
-        shadow-camera-top={30}
-        shadow-camera-bottom={-30}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-left={-35}
+        shadow-camera-right={35}
+        shadow-camera-top={35}
+        shadow-camera-bottom={-35}
         shadow-camera-near={1}
-        shadow-camera-far={120}
-        shadow-bias={-0.0002}
-      />
-      <hemisphereLight
-        args={['#ffffff', '#9a9288', 0.58]}
-        position={[0, 28, 0]}
+        shadow-camera-far={130}
+        shadow-bias={-0.00015}
       />
       
+      {/* Hemisphere light untuk bounce light realistis */}
+      <hemisphereLight
+        args={['#fffef8', '#7a7065', 0.4]}
+        position={[0, 30, 0]}
+      />
+      
+      {/* Secondary directional untuk fill */}
+      <directionalLight
+        position={[-20, 25, -20]}
+        intensity={0.3}
+        color="#fff9f0"
+      />
+      
+      {/* Ceiling spotlights per artwork - reduce shadow maps */}
       {positionedArtworks.map((artwork, i) => (
-        <spotLight
-          key={`ceiling-light-${i}`}
-          position={[artwork.position.x > 0 ? 5 : -5, 11.5, artwork.position.z]}
-          intensity={0.95}
-          angle={0.72}
-          penumbra={0.68}
-          distance={18}
-          color="#fffcf5"
-          castShadow
-          shadow-mapSize-width={512}
-          shadow-mapSize-height={512}
-        />
+        <React.Fragment key={`ceiling-light-${i}`}>
+          <spotLight
+            position={[artwork.position.x > 0 ? 6 : -6, 11.8, artwork.position.z]}
+            intensity={1.2}
+            angle={0.65}
+            penumbra={0.6}
+            distance={20}
+            color="#fffcf2"
+            castShadow={false}
+            decay={1.8}
+          />
+          {/* Additional fill dari arah berlawanan */}
+          <pointLight
+            position={[artwork.position.x > 0 ? -4 : 4, 9, artwork.position.z]}
+            intensity={0.6}
+            distance={12}
+            color="#fff7eb"
+            decay={2}
+          />
+        </React.Fragment>
       ))}
 
-      {[...Array(Math.ceil(galleryLength / 10))].map((_, i) => (
-        <pointLight
-          key={`ambient-${i}`}
-          position={[0, 9, 18 - i * 10]}
-          intensity={0.45}
-          distance={14}
-          color="#fff9f0"
-        />
+      {/* Ambient corridor lights - reduce dari 6 ke 8 unit spacing */}
+      {[...Array(Math.ceil(galleryLength / 8))].map((_, i) => (
+        <React.Fragment key={`ambient-${i}`}>
+          <pointLight
+            position={[0, 10, 20 - i * 8]}
+            intensity={0.4}
+            distance={16}
+            color="#fffaf2"
+            decay={1.9}
+          />
+          <pointLight
+            position={[-8, 8, 20 - i * 8]}
+            intensity={0.2}
+            distance={12}
+            color="#fff8ed"
+            decay={2}
+          />
+          <pointLight
+            position={[8, 8, 20 - i * 8]}
+            intensity={0.2}
+            distance={12}
+            color="#fff8ed"
+            decay={2}
+          />
+        </React.Fragment>
+      ))}
+      
+      {/* Wall wash lights - reduce quantity */}
+      {[...Array(Math.ceil(galleryLength / 15))].map((_, i) => (
+        <React.Fragment key={`wall-wash-${i}`}>
+          <pointLight
+            position={[-12, 7, 15 - i * 15]}
+            intensity={0.25}
+            distance={7}
+            color="#fff9f0"
+            decay={2.2}
+          />
+          <pointLight
+            position={[12, 7, 15 - i * 15]}
+            intensity={0.25}
+            distance={7}
+            color="#fff9f0"
+            decay={2.2}
+          />
+        </React.Fragment>
       ))}
     </>
   );
@@ -1196,7 +1390,7 @@ export default function MuseumPage() {
                 Navigasi dengan panah
               </span>
             </motion.div>
-          </div>cl
+          </div>
         </motion.div>
       )}
 
