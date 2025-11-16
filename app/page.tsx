@@ -130,15 +130,15 @@ const generateArtworkPositions = (artworks: typeof artworkData) => {
 
 const positionedArtworks = generateArtworkPositions(artworkData);
 
-const AUTOPLAY_DELAY = 2.0;
+const AUTOPLAY_DELAY = 2.5;
 
 const generateCameraWaypoints = (artworks: ReturnType<typeof generateArtworkPositions>) => {
   return artworks.map((artwork) => {
-    const zOffset = 2;
-    const camX = artwork.position.x < 0 ? -WALL_OFFSET + 6 : WALL_OFFSET - 6;
+    const zOffset = 2.5;
+    const camX = artwork.position.x < 0 ? -WALL_OFFSET + 7 : WALL_OFFSET - 7;
 
     return {
-      pos: [camX, 3.2, artwork.position.z + zOffset] as [number, number, number],
+      pos: [camX, 3.5, artwork.position.z + zOffset] as [number, number, number],
       look: [artwork.position.x, artwork.position.y, artwork.position.z] as [number, number, number],
       duration: 3,
     };
@@ -149,8 +149,7 @@ const cameraWaypoints = generateCameraWaypoints(positionedArtworks);
 
 const galleryLength = Math.abs(positionedArtworks[positionedArtworks.length - 1].position.z) + 35;
 
-const easeInOutQuart = (t: number) =>
-  t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+const easeInOutQuart = (t: number) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
 
 function Easel({ position, rotation }: { position: [number, number, number]; rotation: [number, number, number] }) {
   return (
@@ -209,15 +208,15 @@ function Chandelier({ position }: { position: [number, number, number] }) {
               <meshStandardMaterial 
                 color="#fff9e6" 
                 emissive="#ffebb3" 
-                emissiveIntensity={0.8}
+                emissiveIntensity={1.8}
                 roughness={0.2}
                 metalness={0.1}
               />
             </mesh>
             <pointLight
               position={[x, -0.15, z]}
-              intensity={0.6}
-              distance={8}
+              intensity={1.5}
+              distance={12}
               color="#ffe5b3"
             />
           </group>
@@ -276,24 +275,11 @@ function PictureFrame({
   isActive: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const { camera } = useThree();
   const [texture, setTexture] = useState<Texture | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // lazy-load textures only when the artwork is near the camera or active
-  useEffect(() => {
+  useMemo(() => {
     let isMounted = true;
-    const dist = Math.abs(artwork.position.z - camera.position.z);
-    const isNearby = dist < 20 || isActive;
-
-    if (!isNearby) {
-      // don't load heavy textures if not nearby; show placeholder
-      setImageLoaded(true);
-      return () => {
-        isMounted = false;
-      };
-    }
-
     const loader = new TextureLoader();
     loader.load(
       artwork.src,
@@ -302,7 +288,6 @@ function PictureFrame({
         tex.colorSpace = THREE.SRGBColorSpace;
         tex.magFilter = THREE.LinearFilter;
         tex.minFilter = THREE.LinearMipMapLinearFilter;
-        tex.anisotropy = 16;
         setTexture(tex);
         setImageLoaded(true);
       },
@@ -311,16 +296,13 @@ function PictureFrame({
         if (isMounted) setImageLoaded(true);
       }
     );
-
-    return () => {
-      isMounted = false;
-    };
-  }, [artwork.src, camera.position.z, isActive]);
+    return () => { isMounted = false; };
+  }, [artwork.src]);
 
   useFrame(() => {
     if (!groupRef.current) return;
-    const targetScale = isActive ? 1.08 : 1;
-    groupRef.current.scale.lerp(new Vector3(targetScale, targetScale, targetScale), 0.12);
+    const targetScale = isActive ? 1.06 : 1;
+    groupRef.current.scale.lerp(new Vector3(targetScale, targetScale, targetScale), 0.08);
   });
 
   const frameWidth = 4.2;
@@ -420,52 +402,37 @@ function PictureFrame({
         />
       </mesh>
 
-        {isActive && (
-          <>
-            <spotLight
-              position={[0, 3.2, 2.8]}
-              intensity={6}
-              angle={0.35}
-              penumbra={0.7}
-              distance={14}
-              color="#ffe5b3"
-              castShadow
-              shadow-mapSize-width={1024}
-              shadow-mapSize-height={1024}
-              shadow-bias={-0.00008}
-              decay={2}
-            />
-            <pointLight
-              position={[0, 1.5, 2.0]}
-              intensity={2.5}
-              distance={8}
-              color="#fff7e6"
-              decay={2}
-            />
-            <pointLight
-              position={[0, 0, 1.5]}
-              intensity={1.0}
-              distance={5}
-              color="#ffffff"
-              decay={2}
-            />
-          </>
-        )}
-
-        {/* rim light for depth when nearby or active */}
-        {(() => {
-          const dist = Math.abs(artwork.position.z - camera.position.z);
-          const isNearby = dist < 20 || isActive;
-          return isNearby ? (
-            <pointLight
-              position={[artwork.position.x > 0 ? 3 : -3, 5, artwork.position.z]}
-              intensity={2.5}
-              distance={8}
-              color="#ffd9a6"
-              decay={2}
-            />
-          ) : null;
-        })()}
+      {isActive && (
+        <>
+          <spotLight
+            position={[0, 3.2, 2.8]}
+            intensity={8}
+            angle={0.35}
+            penumbra={0.7}
+            distance={16}
+            color="#ffe5b3"
+            castShadow
+            shadow-mapSize-width={2048}
+            shadow-mapSize-height={2048}
+            shadow-bias={-0.00005}
+            decay={2}
+          />
+          <pointLight
+            position={[0, 1.5, 2.0]}
+            intensity={3.0}
+            distance={10}
+            color="#fff7e6"
+            decay={2}
+          />
+          <pointLight
+            position={[artwork.position.x > 0 ? 3 : -3, 5, artwork.position.z]}
+            intensity={2.5}
+            distance={8}
+            color="#ffd9a6"
+            decay={2}
+          />
+        </>
+      )}
     </group>
     <Easel 
       position={[artwork.position.x + easelOffset, 0, artwork.position.z]} 
@@ -665,17 +632,19 @@ function LightingSetup() {
         args={['#ffffff', '#9a9288', 0.58]}
         position={[0, 28, 0]}
       />
+      
       {positionedArtworks.map((artwork, i) => (
         <spotLight
           key={`ceiling-light-${i}`}
           position={[artwork.position.x > 0 ? 5 : -5, 11.5, artwork.position.z]}
-          intensity={1.8}
-          angle={0.35}
-          penumbra={0.7}
-          distance={12}
+          intensity={0.95}
+          angle={0.72}
+          penumbra={0.68}
+          distance={18}
           color="#fffcf5"
-          // avoid shadows for the many ceiling lights to reduce texture unit usage
-          castShadow={false}
+          castShadow
+          shadow-mapSize-width={512}
+          shadow-mapSize-height={512}
         />
       ))}
 
@@ -683,7 +652,7 @@ function LightingSetup() {
         <pointLight
           key={`ambient-${i}`}
           position={[0, 9, 18 - i * 10]}
-          intensity={0.8}
+          intensity={0.45}
           distance={14}
           color="#fff9f0"
         />
@@ -702,7 +671,7 @@ function GalleryScene({
   onAnimComplete: () => void;
 }) {
   const { camera } = useThree();
-  const animState = useRef({ progress: 0, startPos: new Vector3(), startQuat: new Quaternion(), lastSway: 0 });
+  const animState = useRef({ progress: 0, startPos: new Vector3(), startQuat: new Quaternion() });
 
   const waypoint = cameraWaypoints[Math.min(currentIndex, cameraWaypoints.length - 1)];
 
@@ -710,9 +679,9 @@ function GalleryScene({
     animState.current.progress = 0;
     animState.current.startPos.copy(camera.position);
     animState.current.startQuat.copy(camera.quaternion);
-    animState.current.lastSway = 0;
   }, [currentIndex, camera]);
-  useFrame((frameState) => {
+
+  useFrame(({ clock }) => {
     const state = animState.current;
     const duration = waypoint.duration * 60;
 
@@ -720,22 +689,30 @@ function GalleryScene({
       state.progress += 1;
       const t = easeInOutQuart(Math.min(state.progress / duration, 1));
 
-      camera.position.lerpVectors(state.startPos, new Vector3(...waypoint.pos), t);
+      camera.position.lerpVectors(
+        state.startPos,
+        new Vector3(...waypoint.pos),
+        t
+      );
 
       const targetQuat = new Quaternion();
       const mat = new THREE.Matrix4();
-      mat.lookAt(camera.position, new Vector3(...waypoint.look), camera.up);
+      mat.lookAt(
+        camera.position,
+        new Vector3(...waypoint.look),
+        camera.up
+      );
       targetQuat.setFromRotationMatrix(mat);
       camera.quaternion.slerp(targetQuat, t);
     } else if (state.progress === duration) {
-      // call completion once when the transition ends
       state.progress += 1;
       onAnimComplete();
-    } else {
-      // subtle cinematic sway while viewing the artwork
-      const sway = Math.sin(frameState.clock.elapsedTime * 0.3) * 0.02;
-      camera.position.x += sway - state.lastSway;
-      state.lastSway = sway;
+    }
+    
+    // Camera sway effect when animation is complete
+    if (state.progress > duration) {
+      const sway = Math.sin(clock.elapsedTime * 0.3) * 0.015;
+      camera.position.x += sway;
     }
   });
 
@@ -779,10 +756,15 @@ export default function MuseumPage() {
   const [hasEntered, setHasEntered] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const touchStartRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const userAgent = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(userAgent));
+  }, []);
 
   useEffect(() => {
     if (!isPlaying) {
@@ -805,50 +787,59 @@ export default function MuseumPage() {
         setShowWelcome(false);
       }
     };
-    window.addEventListener('keydown', handleWelcomeKeydown);
-    return () => window.removeEventListener('keydown', handleWelcomeKeydown);
-  }, [showWelcome]);
-
-  // detect mobile for responsive optimizations
-  useEffect(() => {
-    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
-  }, []);
-
-  // touch swipe handlers for mobile navigation
-  useEffect(() => {
-    if (!hasEntered) return;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartRef.current = e.touches[0].clientX;
-    };
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (touchStartRef.current == null) return;
-      const diff = touchStartRef.current - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) setCurrentIndex((p) => Math.min(cameraWaypoints.length - 1, p + 1));
-        else setCurrentIndex((p) => Math.max(0, p - 1));
+    const handleWelcomeTouch = () => {
+      if (showWelcome) {
+        setShowWelcome(false);
       }
-      touchStartRef.current = null;
     };
-
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('keydown', handleWelcomeKeydown);
+    window.addEventListener('touchstart', handleWelcomeTouch);
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('keydown', handleWelcomeKeydown);
+      window.removeEventListener('touchstart', handleWelcomeTouch);
     };
-  }, [hasEntered]);
+  }, [showWelcome]);
 
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') setCurrentIndex((p) => Math.max(0, p - 1));
-      if (e.key === 'ArrowRight') setCurrentIndex((p) => Math.min(cameraWaypoints.length - 1, p + 1));
-      // Spacebar no longer toggles autoplay to keep tour manual by default
-      // clear any pending autoplay advances when user manually navigates
+      if (e.key === 'ArrowLeft') {
+        setCurrentIndex((p) => Math.max(0, p - 1));
+        setIsPlaying(false);
+      }
+      if (e.key === 'ArrowRight') {
+        setCurrentIndex((p) => Math.min(cameraWaypoints.length - 1, p + 1));
+        setIsPlaying(false);
+      }
       if (timerRef.current) clearTimeout(timerRef.current);
     };
+    const handleTouchStart = (e: TouchEvent) => {
+      setTouchStart(e.touches[0].clientX);
+    };
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (touchStart === null) return;
+      const touchEnd = e.changedTouches[0].clientX;
+      const diff = touchStart - touchEnd;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          setCurrentIndex((p) => Math.min(cameraWaypoints.length - 1, p + 1));
+        } else {
+          setCurrentIndex((p) => Math.max(0, p - 1));
+        }
+        setIsPlaying(false);
+      }
+      setTouchStart(null);
+    };
+    
     window.addEventListener('keydown', handleKeydown);
-    return () => window.removeEventListener('keydown', handleKeydown);
-  }, []);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [touchStart]);
 
   const handleAnimComplete = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -872,12 +863,20 @@ export default function MuseumPage() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-gradient-to-b from-zinc-900 to-black">
+    <div className="h-screen w-screen overflow-hidden bg-gradient-to-b from-zinc-900 to-black touch-none">
       <Canvas
-        camera={{ position: isMobile ? [0, 2.6, 12] : [0, 2.8, 12], fov: isMobile ? 75 : 65, far: 600 }}
-        gl={{ antialias: !isMobile, alpha: false, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: isMobile ? 1.0 : 1.28, powerPreference: isMobile ? 'low-power' : 'high-performance' }}
+        camera={{ position: [0, 3.2, 12], fov: isMobile ? 75 : 65, far: 600 }}
+        gl={{
+          antialias: !isMobile,
+          alpha: false,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: isMobile ? 1.3 : 1.35,
+          powerPreference: isMobile ? 'low-power' : 'high-performance',
+          stencil: false,
+          depth: true,
+        }}
         shadows={!isMobile}
-        dpr={isMobile ? [0.75, 1.5] : [1, 2]}
+        dpr={[1, isMobile ? 1.5 : 2]}
       >
         {hasEntered && (
           <GalleryScene
@@ -965,15 +964,24 @@ export default function MuseumPage() {
                 transition={{ delay: 1.5, duration: 0.6 }}
                 className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-gray-500 px-4"
               >
-                <div className="flex items-center gap-2">
-                  <kbd className="px-2 py-1 bg-white/5 rounded border border-white/10 text-xs">←</kbd>
-                  <kbd className="px-2 py-1 bg-white/5 rounded border border-white/10 text-xs">→</kbd>
-                  <span>Navigasi</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <kbd className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs">Play</kbd>
-                  <span>Mulai lewat tombol</span>
-                </div>
+                {!isMobile ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <kbd className="px-2 py-1 bg-white/5 rounded border border-white/10 text-xs">←</kbd>
+                      <kbd className="px-2 py-1 bg-white/5 rounded border border-white/10 text-xs">→</kbd>
+                      <span>Navigasi</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <kbd className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs">Play</kbd>
+                      <span>Mulai lewat tombol</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center gap-2">
+                    <span>Gestur: Geser kiri/kanan untuk navigasi</span>
+                    <span>Tap tombol untuk memulai tour</span>
+                  </div>
+                )}
               </motion.div>
             </motion.div>
           </motion.div>
@@ -1049,12 +1057,46 @@ export default function MuseumPage() {
       </AnimatePresence>
 
       {hasEntered && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 md:gap-4 z-20"
-        >
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="absolute top-4 sm:top-6 md:top-8 right-4 sm:right-6 md:right-8 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-lg md:rounded-xl bg-black/60 backdrop-blur-lg border border-white/10 z-20 shadow-xl"
+          >
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shadow-lg shadow-amber-500/50" />
+              <span className="text-xs sm:text-sm text-gray-300 font-light whitespace-nowrap">
+                {isPlaying ? 'Tour Aktif' : 'Mode Manual'}
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="absolute bottom-24 sm:bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 w-48 sm:w-64 md:w-72 z-20"
+          >
+            <div className="h-1 bg-white/10 rounded-full overflow-hidden backdrop-blur-md border border-white/20">
+              <motion.div
+                className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600"
+                initial={{ width: 0 }}
+                animate={{ width: `${((currentIndex + 1) / cameraWaypoints.length) * 100}%` }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              />
+            </div>
+            <div className="mt-2 text-center text-xs sm:text-sm text-gray-400 font-light">
+              {currentIndex + 1} / {cameraWaypoints.length}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 md:gap-4 z-20"
+          >
           <motion.button
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
@@ -1094,26 +1136,8 @@ export default function MuseumPage() {
             </svg>
           </motion.button>
         </motion.div>
+        </>
       )}
-
-        {hasEntered && (
-          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 w-64 h-1 bg-white/10 rounded-full z-20">
-            <div
-              className="h-full bg-amber-500 rounded-full"
-              style={{ width: `${((currentIndex + 1) / positionedArtworks.length) * 100}%` }}
-            />
-          </div>
-        )}
-
-        {isMobile && hasEntered && (
-          <motion.div className="absolute bottom-32 left-1/2 -translate-x-1/2 text-center z-20">
-            <p className="text-white/60 text-sm mb-2">Swipe untuk navigasi</p>
-            <div className="flex gap-4 justify-center">
-              <motion.div animate={{ x: [-10, 0] }} transition={{ repeat: Infinity, duration: 1 }}>←</motion.div>
-              <motion.div animate={{ x: [0, 10] }} transition={{ repeat: Infinity, duration: 1 }}>→</motion.div>
-            </div>
-          </motion.div>
-        )}
 
       {hasEntered && positionedArtworks[currentIndex] && (
         <motion.div
