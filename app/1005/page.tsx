@@ -8,22 +8,38 @@ import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 
 const artworkData = [
-{
+  {
     "id": "1",
-    "title": "Gereja HKBP",
-    "year": "",
+    "title": "Gereja adalah Tempat Ibadah Umat Kristen",
     "src": "/ms/1005/1.jpeg",
-    "description": "Gereja ini adalah Gereja HKBP dengan bangunan berwarna krem dan atap segitiga tinggi. Di bagian depan terdapat salib hitam besar sebagai simbol utama gereja. Pintu utama berbentuk lengkung dengan desain kayu, dikelilingi kaca patri. Halamannya dipagar dan dihiasi tanaman, sementara bangunannya dilengkapi jendela serta pendingin ruangan. Secara keseluruhan, gereja ini tampak sederhana, rapi, dan terawat sebagai tempat ibadah jemaat HKBP.",
+    "description": "Gereja adalah bangunan suci yang digunakan umat Kristen untuk melaksanakan ibadah, doa, dan kegiatan rohani lainnya. Di dalam gereja, umat berkumpul untuk memuji Tuhan, mendengarkan firman, serta memperoleh bimbingan iman. Gereja juga menjadi simbol kehadiran Tuhan di tengah umat dan berfungsi sebagai pusat kehidupan rohani bagi komunitas Kristen."
   },
   {
     "id": "2",
-    "title": "AULA IBADAH GEREJA HKBP ",
-    "year": "",
+    "title": "Aula Utama atau Ruang Ibadah Gereja",
     "src": "/ms/1005/2.jpeg",
-    "description": "Seni dan budaya Islam di Muara Bungo (Jambi) sangat kental dengan tradisi Melayu dan lokalitas. Ini terlihat pada arsitektur masjid tradisional yang menyerupai rumah panggung Melayu, serta seni ukir (kaligrafi) pada mimbar dan dinding. Tradisi lisan dan kesenian yang bernuansa Islami, seperti zikir maulid dan seni hadrah/rebana, digunakan untuk menyebarkan ajaran agama dalam acara adat dan keagamaan.",
-    "theme": "Seni & Budaya Regional"
+    "description": "Aula utama atau ruang ibadah adalah bagian paling penting dari sebuah gereja, tempat berlangsungnya misa, ibadah Minggu, kebaktian, dan perayaan hari-hari besar keagamaan. Biasanya dilengkapi mimbar, altar, kursi jemaat, paduan suara, serta salib, dengan suasana tenang dan khidmat agar umat dapat beribadah dengan sungguh-sungguh."
+  },
+  {
+    "id": "3",
+    "title": "Gereja sebagai Tempat Pembinaan Iman",
+    "src": "/ms/1005/3.jpeg",
+    "description": "Gereja menjalankan fungsi pembinaan iman melalui sekolah minggu, kelas remaja, katekisasi, dan ceramah Alkitab. Pembinaan ini membantu umat memahami ajaran Kristiani secara mendalam, mulai dari anak-anak hingga orang dewasa, agar dapat menghidupi nilai-nilai kasih dalam kehidupan sehari-hari."
+  },
+  {
+    "id": "4",
+    "title": "Gereja sebagai Rumah Persekutuan",
+    "src": "/ms/1005/4.jpeg",
+    "description": "Gereja menjadi ruang bagi umat untuk membangun persekutuan, saling mendukung, dan berbagi pengalaman hidup. Kegiatan seperti latihan paduan suara, kelompok kecil, dan acara kebersamaan memperkuat rasa persaudaraan antarjemaat dan menumbuhkan kebersamaan."
+  },
+  {
+    "id": "5",
+    "title": "Gereja sebagai Pusat Pelayanan Sosial",
+    "src": "/ms/1005/5.jpeg",
+    "description": "Gereja berperan aktif dalam pelayanan sosial seperti penggalangan bantuan, bakti sosial, pemberian makanan bagi kaum miskin, hingga membantu korban bencana. Melalui tindakan nyata ini, gereja menerapkan ajaran kasih dan kepedulian kepada masyarakat luas."
   }
 ]
+
 
 const SPACING = 8;
 const WALL_OFFSET = 11;
