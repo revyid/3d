@@ -1028,7 +1028,7 @@ export default function MuseumPage() {
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
                 <h1 className="mb-6 text-5xl sm:text-7xl md:text-9xl font-extralight tracking-[0.3em] text-white drop-shadow-2xl">
-                  MUSEUM
+                  Gereja HKBP
                 </h1>
               </motion.div>
               <motion.div
