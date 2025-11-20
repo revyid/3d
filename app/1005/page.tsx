@@ -12,14 +12,14 @@ const artworkData = [
     "id": "1",
     "title": "Gereja HKBP",
     "year": "",
-    "src": "/ms/1005/1.jpg",
+    "src": "/ms/1005/1.jpeg",
     "description": "Gereja ini adalah Gereja HKBP dengan bangunan berwarna krem dan atap segitiga tinggi. Di bagian depan terdapat salib hitam besar sebagai simbol utama gereja. Pintu utama berbentuk lengkung dengan desain kayu, dikelilingi kaca patri. Halamannya dipagar dan dihiasi tanaman, sementara bangunannya dilengkapi jendela serta pendingin ruangan. Secara keseluruhan, gereja ini tampak sederhana, rapi, dan terawat sebagai tempat ibadah jemaat HKBP.",
   },
   {
     "id": "2",
     "title": "AULA IBADAH GEREJA HKBP ",
     "year": "",
-    "src": "/ms/1005/2.jpg",
+    "src": "/ms/1005/2.jpeg",
     "description": "Seni dan budaya Islam di Muara Bungo (Jambi) sangat kental dengan tradisi Melayu dan lokalitas. Ini terlihat pada arsitektur masjid tradisional yang menyerupai rumah panggung Melayu, serta seni ukir (kaligrafi) pada mimbar dan dinding. Tradisi lisan dan kesenian yang bernuansa Islami, seperti zikir maulid dan seni hadrah/rebana, digunakan untuk menyebarkan ajaran agama dalam acara adat dan keagamaan.",
     "theme": "Seni & Budaya Regional"
   }
