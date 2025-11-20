@@ -1044,7 +1044,7 @@ export default function MuseumPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                <h1 className="mb-6 text-5xl sm:text-7xl md:text-9xl font-extralight tracking-[0.3em] text-white drop-shadow-2xl">
+                <h1 className="mb-6 text-2xl sm:text-3xl md:text5xl font-extralight tracking-[0.3em] text-white drop-shadow-2xl">
                   Perkembangan Islam Di Muara Bungo
                 </h1>
               </motion.div>
