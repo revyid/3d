@@ -7,8 +7,7 @@ export default function EmbedPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [forceContinue, setForceContinue] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -17,33 +16,31 @@ export default function EmbedPage() {
     setIsMobile(mobile);
   }, []);
 
-  const toggleAudio = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleAudioEnd = () => {
-    setIsPlaying(false);
-  };
-
   if (!mounted) return null;
 
-  // Block mobile access
-  if (isMobile) {
+  // Block mobile access (with skip option)
+  if (isMobile && !forceContinue) {
     return (
       <div className="h-screen w-screen flex items-center justify-center bg-black">
-        <div className="text-center px-8">
-          <h1 className="text-4xl font-bold text-white mb-4">⚠️ Desktop Only</h1>
-          <p className="text-xl text-gray-400">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center px-8"
+        >
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">⚠️ Desktop Only</h1>
+          <p className="text-lg sm:text-xl text-gray-400 mb-8">
             Pengalaman terbaik di perangkat desktop. Silakan akses dari komputer.
           </p>
-        </div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setForceContinue(true)}
+            className="px-6 py-2 bg-cyan-500 hover:bg-cyan-400 text-white font-semibold rounded-lg transition-all"
+          >
+            Lanjutkan Anyways
+          </motion.button>
+        </motion.div>
       </div>
     );
   }
@@ -52,12 +49,6 @@ export default function EmbedPage() {
   if (!hasStarted) {
     return (
       <div className="h-screen w-screen overflow-hidden bg-gradient-to-b from-slate-900 via-blue-900 to-slate-950" style={{ backgroundImage: 'url(/ms/4326938.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <audio 
-          ref={audioRef} 
-          src="/ms/68b15b54-76c4-4817-864d-f4c15c9d1b32.mp3"
-          onEnded={handleAudioEnd}
-        />
-        
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
@@ -107,7 +98,7 @@ export default function EmbedPage() {
                 </p>
               </motion.div>
 
-              {/* Start Button and Audio */}
+              {/* Start Button */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -122,30 +113,6 @@ export default function EmbedPage() {
                 >
                   <span className="relative z-10">Mulai Jelajahi</span>
                 </motion.button>
-
-                {/* Audio Controls */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.8, duration: 0.6 }}
-                  className="flex items-center gap-1.5 sm:gap-2 md:gap-3"
-                >
-                  <button
-                    onClick={toggleAudio}
-                    className="p-2 sm:p-2.5 md:p-3 rounded-full bg-white/10 hover:bg-cyan-500/20 transition-all border border-cyan-400/30 hover:border-cyan-400/60"
-                  >
-                    {isPlaying ? (
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                      </svg>
-                    ) : (
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    )}
-                  </button>
-                  <span className="text-xs sm:text-sm text-blue-200">{isPlaying ? 'Pause' : 'Play'} Narasi</span>
-                </motion.div>
               </motion.div>
 
               {/* Hint */}
@@ -198,12 +165,6 @@ export default function EmbedPage() {
   // Embedded Gallery View
   return (
     <div className="h-screen w-screen overflow-hidden" style={{ backgroundImage: 'url(/ms/4326938.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-      <audio 
-        ref={audioRef} 
-        src="/ms/68b15b54-76c4-4817-864d-f4c15c9d1b32.mp3"
-        onEnded={handleAudioEnd}
-      />
-
       {/* Embedded Gallery */}
       <motion.iframe
         initial={{ opacity: 0 }}
