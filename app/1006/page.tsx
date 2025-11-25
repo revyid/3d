@@ -9,47 +9,102 @@ import * as THREE from 'three';
 
 const artworkData = [
   {
-    "id": "1",
-    "title": "Gereja adalah Tempat Ibadah Umat Kristen",
-    "year": "Masa Kini",
-    "src": "/ms/1005/1.jpeg",
-    "description": "Gereja adalah bangunan suci yang digunakan umat Kristen untuk melaksanakan ibadah, doa, dan kegiatan rohani lainnya. Di dalam gereja, umat berkumpul untuk memuji Tuhan, mendengarkan firman, serta memperoleh bimbingan iman. Gereja juga menjadi simbol kehadiran Tuhan di tengah umat dan berfungsi sebagai pusat kehidupan rohani bagi komunitas Kristen.",
-    "theme": "Rumah Ibadah"
+    "id": "islamisasi-1",
+    "title": "Masuknya Islam ke Nusantara",
+    "year": "Abad ke-13 hingga ke-16 M",
+    "src": "/ms/1000/1.jpg",
+    "description": "Islamisasi di Nusantara berlangsung secara damai melalui berbagai jalur, antara lain: Perkawinan, Perdagangan, Dakwah, Seni Budaya, dan Tasawuf. Terdapat juga beberapa teori mengenai asal dan waktu kedatangan Islam ke wilayah ini.",
+    "theme": "Jalur-Jalur Utama"
   },
   {
-    "id": "2",
-    "title": "Aula Utama atau Ruang Ibadah Gereja",
-    "year": "Masa Kini",
-    "src": "/ms/1005/2.jpeg",
-    "description": "Aula utama atau ruang ibadah adalah bagian paling penting dari sebuah gereja, tempat berlangsungnya misa, ibadah Minggu, kebaktian, dan perayaan hari-hari besar keagamaan. Biasanya dilengkapi mimbar, altar, kursi jemaat, paduan suara, serta salib, dengan suasana tenang dan khidmat agar umat dapat beribadah dengan sungguh-sungguh.",
-    "theme": "Arsitektur Gereja"
+    "id": "islamisasi-2",
+    "title": "Jalur Perkawinan",
+    "year": "Abad ke-15 M",
+    "src": "/ms/1000/2.jpg",
+    "description": "Perkawinan adalah jalur yang efektif, di mana pedagang Muslim menikahi wanita pribumi (seringkali putri bangsawan) yang terlebih dahulu memeluk Islam, menghasilkan keturunan Muslim dan memperluas pengaruh agama hingga ke lingkungan istana.",
+    "theme": "Jalur Perkawinan"
   },
   {
-    "id": "3",
-    "title": "Gereja sebagai Tempat Pembinaan Iman",
-    "year": "Masa Kini",
-    "src": "/ms/1005/3.jpeg",
-    "description": "Gereja menjalankan fungsi pembinaan iman melalui sekolah minggu, kelas remaja, katekisasi, dan ceramah Alkitab. Pembinaan ini membantu umat memahami ajaran Kristiani secara mendalam, mulai dari anak-anak hingga orang dewasa, agar dapat menghidupi nilai-nilai kasih dalam kehidupan sehari-hari.",
-    "theme": "Fungsi Pembinaan"
+    "id": "islamisasi-3",
+    "title": "Jalur Dakwah dan Pendidikan",
+    "year": "Abad ke-15 M",
+    "src": "/ms/1000/3.jpg",
+    "description": "Para ulama dan mubaligh (seperti Wali Songo di Jawa) menyebarkan Islam secara langsung melalui pengajaran di surau dan pesantren. Pesantren menjadi pusat pendidikan yang melahirkan generasi baru ulama dan pemimpin Muslim.",
+    "theme": "Jalur Dakwah"
   },
   {
-    "id": "4",
-    "title": "Gereja sebagai Rumah Persekutuan",
-    "year": "Masa Kini",
-    "src": "/ms/1005/4.jpeg",
-    "description": "Gereja menjadi ruang bagi umat untuk membangun persekutuan, saling mendukung, dan berbagi pengalaman hidup. Kegiatan seperti latihan paduan suara, kelompok kecil, dan acara kebersamaan memperkuat rasa persaudaraan antarjemaat dan menumbuhkan kebersamaan.",
-    "theme": "Persekutuan"
+    "id": "islamisasi-4",
+    "title": "Jalur Perdagangan",
+    "year": "Abad ke-7 hingga ke-16 M",
+    "src": "/ms/1000/4.jpg",
+    "description": "Para pedagang Muslim dari Arab, Persia, dan Gujarat singgah di pelabuhan Nusantara. Interaksi ekonomi yang intensif menumbuhkan komunitas Muslim di pesisir, yang menjadi cikal bakal permukiman dan pusat dakwah.",
+    "theme": "Jalur Perdagangan"
   },
   {
-    "id": "5",
-    "title": "Gereja sebagai Pusat Pelayanan Sosial",
-    "year": "Masa Kini",
-    "src": "/ms/1005/5.jpeg",
-    "description": "Gereja berperan aktif dalam pelayanan sosial seperti penggalangan bantuan, bakti sosial, pemberian makanan bagi kaum miskin, hingga membantu korban bencana. Melalui tindakan nyata ini, gereja menerapkan ajaran kasih dan kepedulian kepada masyarakat luas.",
-    "theme": "Pelayanan Sosial"
+    "id": "islamisasi-5",
+    "title": "Jalur Seni dan Budaya",
+    "year": "Abad ke-15 M",
+    "src": "/ms/1000/5.jpg",
+    "description": "Penyebaran Islam dilakukan melalui adaptasi dan akulturasi budaya lokal. Contoh paling terkenal adalah Sunan Kalijaga yang menggunakan media seni wayang, ukiran, dan gending (lagu) untuk menyampaikan ajaran Islam secara halus dan mudah diterima.",
+    "theme": "Jalur Seni & Budaya"
+  },
+  {
+    "id": "islamisasi-6",
+    "title": "Teori Gujarat (India)",
+    "year": "Abad ke-13 M",
+    "src": "/ms/1000/6.jpg",
+    "description": "Teori ini menyatakan bahwa Islam masuk ke Nusantara dari pedagang Gujarat (India) pada sekitar abad ke-13 M. Bukti pendukung utama adalah penemuan batu nisan Sultan Malik As-Saleh di Pasai yang mirip dengan corak nisan di Gujarat.",
+    "theme": "Teori Islamisasi"
+  },
+  {
+    "id": "islamisasi-7",
+    "title": "Teori Arab/Mekkah",
+    "year": "Abad ke-7 M",
+    "src": "/ms/1000/7.jpg",
+    "description": "Teori ini berpendapat bahwa Islam datang langsung dari Arab (Timur Tengah) sejak abad ke-7 Masehi. Bukti pendukungnya adalah jalur perdagangan Arab yang sudah ramai sejak masa awal, serta kesamaan mazhab Syafi'i yang dianut di Nusantara dan Arab.",
+    "theme": "Teori Islamisasi"
+  },
+  {
+    "id": "islamisasi-8",
+    "title": "Teori Persia",
+    "year": "Abad ke-13 M",
+    "src": "/ms/1000/8.jpg",
+    "description": "Teori ini menyebutkan bahwa Islam datang dari Persia (Iran). Bukti yang sering digunakan adalah kesamaan tradisi budaya Islam di Nusantara dengan Persia, seperti perayaan 10 Muharram (Asyura) di beberapa daerah yang mirip dengan budaya Syiah Persia.",
+    "theme": "Teori Islamisasi"
+  },
+{
+    "id": "islamisasi-9",
+    "title": "Islamisasi di Muara Bungo (Jambi)",
+    "year": "Abad ke-19 M",
+    "src": "/ms/1000/9.jpg",
+    "description": "Proses Islamisasi di Muara Bungo merupakan bagian dari penyebaran Islam di hulu Sungai Batanghari, Kesultanan Jambi. Tokoh dakwah awal diyakini berasal dari jalur Jawa dan Minangkabau. Bukti penguatan Islam ditunjukkan dengan pembangunan masjid-masjid tua, seperti Masjid Al-Falah di Empelu (dibangun ulang 1827) dan Masjid Al-Munawwaroh (cikal bakal surau 1900) yang menjadi pusat pendidikan dan dakwah.",
+    "theme": "Islamisasi Regional"
+  },
+  {
+    "id": "islamisasi-10",
+    "title": "Seni dan Budaya Islam Muara Bungo",
+    "year": "Abad ke-19 M - Sekarang",
+    "src": "/ms/1000/10.jpg",
+    "description": "Seni dan budaya Islam di Muara Bungo (Jambi) sangat kental dengan tradisi Melayu dan lokalitas. Ini terlihat pada arsitektur masjid tradisional yang menyerupai rumah panggung Melayu, serta seni ukir (kaligrafi) pada mimbar dan dinding. Tradisi lisan dan kesenian yang bernuansa Islami, seperti zikir maulid dan seni hadrah/rebana, digunakan untuk menyebarkan ajaran agama dalam acara adat dan keagamaan.",
+    "theme": "Seni & Budaya Regional"
+  },
+  {
+    "id": "islamisasi-11",
+    "title": "Pawai Obor 10 Muharram (Asyura)",
+    "year": "Masa Kini (Tradisi Tahunan)",
+    "src": "/ms/1000/11.jpg",
+    "description": "Pawai Obor yang dilaksanakan di Muara Bungo sering terkait dengan peringatan 10 Muharram (Hari Asyura), di mana kegiatan ini menjadi simbol penyambutan dan penghormatan terhadap hari penting dalam kalender Hijriah. Pawai ini bertujuan mempererat kebersamaan dan memeriahkan hari raya Islam, yang sering diiringi dengan kegiatan amal atau pembacaan sholawat.",
+    "theme": "Tradisi Keagamaan"
+  },
+  {
+    "id": "islamisasi-12",
+    "title": "Tradisi Betimbang/Mengembang Tando",
+    "year": "Tradisi Lokal Melayu",
+    "src": "/ms/1000/12.jpg",
+    "description": "Tradisi 'Betimbang' (atau 'Mengembang Tando' di beberapa dusun) terkait dengan ritual siklus hidup masyarakat, khususnya dalam adat pernikahan (Tando) atau penimbangan bayi (Betimbang). Meskipun memiliki akar adat pra-Islam, ritual ini telah diakulturasi dengan pembacaan doa-doa dan ayat suci Al-Qur'an, menjadikannya bagian dari budaya Islam Melayu setempat.",
+    "theme": "Akulturasi Budaya"
   }
-] as const
-
+]
 
 const SPACING = 8;
 const WALL_OFFSET = 11;
@@ -881,7 +936,7 @@ function LoadingBar() {
     >
       <div className="w-72 h-2.5 bg-white/10 rounded-full overflow-hidden backdrop-blur-md border border-white/20">
         <motion.div
-          className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600"
+          className="h-full bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ ease: 'linear' }}
@@ -1039,7 +1094,7 @@ export default function MuseumPage() {
             className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black"
             style={{
               backgroundImage:
-                'radial-gradient(circle at 50% 50%, rgba(217, 119, 6, 0.12) 0%, transparent 50%)',
+                'radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.12) 0%, transparent 50%)',
             }}
           >
             <motion.div
@@ -1053,15 +1108,15 @@ export default function MuseumPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                <h1 className="mb-6 text-3xl sm:text-4xl md:text-6xl font-extralight tracking-[0.3em] text-white drop-shadow-2xl">
-                  Gereja HKBP
+                <h1 className="mb-6 text-5xl sm:text-7xl md:text-9xl font-extralight tracking-[0.3em] text-white drop-shadow-2xl">
+                  MUSEUM
                 </h1>
               </motion.div>
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="h-0.5 w-24 sm:w-28 md:w-32 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mb-8 md:mb-12"
+                className="h-0.5 w-24 sm:w-28 md:w-32 bg-gradient-to-r from-transparent via-pink-500 to-transparent mx-auto mb-8 md:mb-12"
               />
               <motion.p
                 initial={{ opacity: 0 }}
@@ -1084,14 +1139,14 @@ export default function MuseumPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3, duration: 0.6 }}
-                whileHover={{ scale: 1.05, boxShadow: '0 25px 50px rgba(217, 119, 6, 0.5)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 25px 50px rgba(236, 72, 153, 0.5)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setHasEntered(true)}
-                className="group px-10 sm:px-16 md:px-20 py-3 sm:py-4 md:py-5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:via-amber-600 hover:to-amber-500 text-white font-semibold text-sm sm:text-base md:text-lg rounded-full transition-all shadow-2xl relative overflow-hidden"
+                className="group px-10 sm:px-16 md:px-20 py-3 sm:py-4 md:py-5 bg-gradient-to-r from-pink-600 via-pink-500 to-pink-600 hover:from-pink-500 hover:via-pink-600 hover:to-pink-500 text-white font-semibold text-sm sm:text-base md:text-lg rounded-full transition-all shadow-2xl relative overflow-hidden"
               >
                 <span className="relative z-10">Masuki Galeri</span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600"
+                  className="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-600"
                   initial={{ x: '-100%' }}
                   whileHover={{ x: '100%' }}
                   transition={{ duration: 0.6 }}
@@ -1155,7 +1210,7 @@ export default function MuseumPage() {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="h-px w-32 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mb-8"
+                className="h-px w-32 bg-gradient-to-r from-transparent via-pink-500 to-transparent mx-auto mb-8"
               />
               
               <motion.p
@@ -1174,8 +1229,8 @@ export default function MuseumPage() {
                 transition={{ delay: 0.8 }}
                 className="flex flex-col items-center gap-4"
               >
-                <div className="flex items-center gap-3 text-sm text-amber-400">
-                  <kbd className="px-4 py-2 bg-white/10 rounded-lg border border-amber-500/30 font-mono">
+                <div className="flex items-center gap-3 text-sm text-pink-400">
+                  <kbd className="px-4 py-2 bg-white/10 rounded-lg border border-pink-500/30 font-mono">
                     Tekan tombol apa saja atau tap di mana saja
                   </kbd>
                 </div>
@@ -1185,7 +1240,7 @@ export default function MuseumPage() {
                   transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                   className="mt-4"
                 >
-                  <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </motion.div>
@@ -1204,7 +1259,7 @@ export default function MuseumPage() {
             className="absolute top-4 sm:top-6 md:top-8 right-4 sm:right-6 md:right-8 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-lg md:rounded-xl bg-black/60 backdrop-blur-lg border border-white/10 z-20 shadow-xl"
           >
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shadow-lg shadow-amber-500/50" />
+              <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse shadow-lg shadow-pink-500/50" />
               <span className="text-xs sm:text-sm text-gray-300 font-light whitespace-nowrap">
                 {isPlaying ? 'Tour Aktif' : 'Mode Manual'}
               </span>
@@ -1219,7 +1274,7 @@ export default function MuseumPage() {
           >
             <div className="h-1 bg-white/10 rounded-full overflow-hidden backdrop-blur-md border border-white/20">
               <motion.div
-                className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600"
+                className="h-full bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600"
                 initial={{ width: 0 }}
                 animate={{ width: `${((currentIndex + 1) / cameraWaypoints.length) * 100}%` }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -1252,7 +1307,7 @@ export default function MuseumPage() {
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsPlaying(!isPlaying)}
-            className="rounded-full bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 p-2 sm:p-3 md:p-4 text-white transition-all shadow-xl"
+            className="rounded-full bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 p-2 sm:p-3 md:p-4 text-white transition-all shadow-xl"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
               {isPlaying ? (
@@ -1310,7 +1365,7 @@ export default function MuseumPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="h-px bg-gradient-to-r from-amber-400 via-amber-500 to-transparent mb-4 md:mb-6"
+              className="h-px bg-gradient-to-r from-pink-400 via-pink-500 to-transparent mb-4 md:mb-6"
             />
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -1328,7 +1383,7 @@ export default function MuseumPage() {
               className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs sm:text-xs md:text-xs text-gray-500 pt-4 md:pt-6 border-t border-white/10"
             >
               <span className="font-medium">Karya {currentIndex + 1} dari {positionedArtworks.length}</span>
-              <span className="text-amber-400 flex items-center gap-1">
+              <span className="text-pink-400 flex items-center gap-1">
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -1347,7 +1402,7 @@ export default function MuseumPage() {
           className="absolute top-6 sm:top-8 md:top-10 right-4 sm:right-6 md:right-10 px-4 sm:px-5 md:px-6 py-3 sm:py-3 md:py-4 rounded-lg sm:rounded-lg md:rounded-xl bg-black/50 backdrop-blur-lg border border-white/10 z-20"
         >
           <div className="flex items-center gap-2 sm:gap-3 md:gap-3">
-            <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
             <span className="text-xs sm:text-sm md:text-sm text-gray-300 font-light">
               {isPlaying ? 'Tour Aktif' : 'Mode Manual'}
             </span>
